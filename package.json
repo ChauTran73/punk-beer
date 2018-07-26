@@ -4,7 +4,7 @@
   "description": "Search for beers, favorite them - using Punk API",
   "main": "app.js",
   "scripts": {
-    "test": "export NODE_ENV=test || SET \"NODE_ENV=test\" && mocha server/**/*.test.js",
+    "test": "export NODE_ENV=test || SET \"NODE_ENV=test\" && mocha server/tests",
     "test-watch": "nodemon --exec \"npm test\""
   },
   "repository": {
