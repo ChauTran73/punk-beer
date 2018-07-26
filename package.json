@@ -1,0 +1,34 @@
+{
+  "name": "punk-beer",
+  "version": "1.0.0",
+  "description": "Search for beers, favorite them - using Punk API",
+  "main": "app.js",
+  "scripts": {
+    "test": "export NODE_ENV=test || SET \"NODE_ENV=test\" && mocha server/**/*.test.js",
+    "test-watch": "nodemon --exec \"npm test\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ChauTran73/punk-beer.git"
+  },
+  "keywords": [
+    "beer",
+    "node.js",
+    "react",
+    "express",
+    "punk",
+    "api"
+  ],
+  "author": "Chau Tran & Sean Fallmann",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ChauTran73/punk-beer/issues"
+  },
+  "homepage": "https://github.com/ChauTran73/punk-beer#readme",
+  "devDependencies": {
+    "nodemon": "^1.18.3"
+  },
+  "dependencies": {
+    "mongoose": "^5.2.5"
+  }
+}
