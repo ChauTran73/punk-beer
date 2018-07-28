@@ -1,3 +1,4 @@
+'use strict';
 const mongoose = require('mongoose');
 const validator = require('validator/lib/isEmail');
 
@@ -18,8 +19,19 @@ const UserSchema = new mongoose.Schema({
       require: true,
       minlength: 6
   },
-  favorites: [String]
+  favorites: {
+    type: [String],
+    default: []
+  }
 })
+
+UserSchema.method('addFavorite', (favorite) => {
+  return this.update({
+    $push: {
+      favorites: favorite
+    } 
+  });
+});   
 
 const User = mongoose.model('User', UserSchema);
 
