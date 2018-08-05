@@ -14,7 +14,11 @@ describe('Tests', () => {
   })
 
   after(() => {
-    return mongoose.disconnect();
+    mongoose.connection.dropDatabase()
+    .then(() => {
+      return mongoose.disconnect();
+    })
+    
   })
 
   require('./db/connection.test');

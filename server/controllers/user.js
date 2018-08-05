@@ -6,6 +6,8 @@ const userController = {
 
     return User.findOne({email})
     .then((doc) => {
+      req.session.authenticated = true;
+      req.session.email = doc.email;
       res.json(doc);
     })
     .catch((e) => {
