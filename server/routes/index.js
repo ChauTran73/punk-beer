@@ -1,10 +1,10 @@
 const router = require('express').Router();
 const { ensureLoggedIn } = require('connect-ensure-login');
-
 const { passport } = require('../../server/passport-config');
 
-router.get('/', ensureLoggedIn('/login'), (req, res, next) => {
-  console.log(req.session.passport)
+router.get('/favorites', ensureLoggedIn('/login'), (req, res) => {
+
+  // simple session test - placeholder
   if(req.session.page_views){
     req.session.page_views++;
     res.send("You visited this page " + req.session.page_views + " times");
@@ -19,14 +19,14 @@ router.get(
   '/login',
   passport.authenticate('auth0', {
     clientID: process.env.AUTH0_CLIENT_ID,
-    domain: 'sfallmann.auth0.com',
+    domain: process.env.AUTH0_CLIENT_ID,
     redirectUri: process.env.CALLBACK_URL,
-    audience: 'https://sfallmann.auth0.com/userinfo',
+    audience: process.env.AUTH0_AUDIENCE,
     responseType: 'code',
-    scope: 'openid profile'
+    scope: process.env.AUTH0_SCOPE
   }),
   function(req, res) {
-    res.redirect('/');
+    res.redirect('/favorites');
   }
 );
 
@@ -45,5 +45,10 @@ router.get(
     res.redirect(req.session.returnTo || '/user');
   }
 );
+
+router.get('/', (req, res) => {
+  //placeholder
+  res.status(200).json({status: 'ok', code: 200});
+})
 
 module.exports = router;
