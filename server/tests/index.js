@@ -6,6 +6,8 @@ const mongoose = require('mongoose');
 require('../config/config');
 require('../db/connection');
 
+const { mem } = require('../cache');
+
 describe('Tests', () => {
   before((done) => {
     mongoose.connection.on('open',function (err) {  
@@ -13,15 +15,15 @@ describe('Tests', () => {
     }); 
   })
 
-  after(() => {
-    mongoose.connection.dropDatabase()
-    .then(() => {
-      return mongoose.disconnect();
-    })
-    
+  after(async () => {
+    await mongoose.connection.dropDatabase();
+    await mongoose.disconnect();
+    await mem.cache.flush();
+    await mem.cache.quit();
   })
 
   require('./db/connection.test');
   require('./models/user.test');
+  require('./cache/mem.test');
 })
 
