@@ -1,6 +1,7 @@
 const router = require('express').Router();
 const { ensureLoggedIn } = require('connect-ensure-login');
 const { passport } = require('../../server/passport-config');
+const axios = require('axios');
 
 router.get('/favorites', ensureLoggedIn('/login'), (req, res) => {
 
