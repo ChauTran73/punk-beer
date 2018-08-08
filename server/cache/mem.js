@@ -25,6 +25,7 @@ const cache = {
     })  
   },
   get: (key) => {
+
     return new Promise((resolve, reject) => {
       client.get(key, (err, buff) => {
         if (err) {
@@ -53,14 +54,12 @@ const cache = {
     return await axios.get(request);
   },
   _determineGetMethod: (key) => {
-    
-    switch (key) {
-      case(/^http:/.test(key)): {
-        let filteredKey = key.replace(/^http:/, "");
-        return {
-          request,
-          get: _getHttp
-        }
+
+    if (/^http:/.test(key)) {
+      let filteredKey = key.replace(/^http:/, "");
+      return {
+        request: filteredKey,
+        get: cache._getHttp
       }
     }
   },
