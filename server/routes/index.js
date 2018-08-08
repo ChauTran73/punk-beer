@@ -1,19 +1,10 @@
 const router = require('express').Router();
+const axios = require('axios');
 const { ensureLoggedIn } = require('connect-ensure-login');
 const { passport } = require('../../server/passport-config');
-const axios = require('axios');
+const { userController } = require('../controllers');
 
-router.get('/favorites', ensureLoggedIn('/login'), (req, res) => {
-
-  // simple session test - placeholder
-  if(req.session.page_views){
-    req.session.page_views++;
-    res.send("You visited this page " + req.session.page_views + " times");
-  } else {
-      req.session.page_views = 1;
-      res.send("Welcome to this page for the first time!");
-  }
-})
+router.get('/favorites', ensureLoggedIn('/login'), userController.getUser);
 
 // Perform the login
 router.get(
