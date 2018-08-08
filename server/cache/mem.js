@@ -38,16 +38,30 @@ const cache = {
   },
   checkAndSet: async (key) => {
 
-    if (!isURL(key)) throw new Error(`Key value "${key}" was not a valid URL`);
-
     let value = await cache.get(key);
 
     if (!value) {
-      let { data } = await axios.get(key);
+      let { request, get } = cache._determineGetMethod(key);
+      let { data } = await get(request);
       await cache.set(key, data);
       return data;
     } else {
       return value;
+    }
+  },
+  _getHttp: async(request) => {
+    return await axios.get(request);
+  },
+  _determineGetMethod: (key) => {
+    
+    switch (key) {
+      case(/^http:/.test(key)): {
+        let filteredKey = key.replace(/^http:/, "");
+        return {
+          request,
+          get: _getHttp
+        }
+      }
     }
   },
   flush: () => client.flush(),
