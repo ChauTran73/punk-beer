@@ -4,7 +4,10 @@ const { ensureLoggedIn } = require('connect-ensure-login');
 const { passport } = require('../../server/passport-config');
 const { userController } = require('../controllers');
 
-router.get('/favorites', ensureLoggedIn('/login'), userController.getUser);
+router.get('/favorites', ensureLoggedIn('/login'), userController.getUser, (req, res) => {
+  let { favorites, favoritesData } = req.session;
+  res.status(200).json({favorites, favoritesData});
+});
 
 // Perform the login
 router.get(
@@ -18,7 +21,7 @@ router.get(
     scope: process.env.AUTH0_SCOPE
   }),
   function(req, res) {
-    res.redirect('/favorites');
+    res.redirect('/favorites/');
   }
 );
 
